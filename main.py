@@ -118,7 +118,10 @@ def form_create():
             db.session.commit()
             return redirect('/index')
         else:
-            transcribed_text = speech()
+            try:
+                transcribed_text = speech()
+            except:
+                return render_template('create_card.html', title=title, subtitle=subtitle, text=text, error="Transkrypcja się nie powiodła...")
             text = text + " " + transcribed_text
             return render_template('create_card.html', title=title, subtitle=subtitle, text=text)
     else:
